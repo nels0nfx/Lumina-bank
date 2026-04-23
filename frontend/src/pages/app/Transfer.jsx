@@ -48,7 +48,7 @@ export default function Transfer() {
     } finally { setLoading(false); }
   };
 
-  const useBeneficiary = (b) => {
+  const applyBeneficiary = (b) => {
     setForm(f => ({ ...f, recipient_type: b.identifier_type, recipient: b.identifier }));
   };
 
@@ -129,7 +129,7 @@ export default function Transfer() {
               <ul className="space-y-2">
                 {beneficiaries.map(b => (
                   <li key={b.id}>
-                    <button onClick={() => useBeneficiary(b)} data-testid={`benef-${b.id}`}
+                    <button onClick={() => applyBeneficiary(b)} data-testid={`benef-${b.id}`}
                       className="w-full text-left p-3 border border-border hover:border-gold-500 rounded-sm">
                       <p className="text-sm font-medium text-navy-900">{b.name}</p>
                       <p className="text-xs text-muted-foreground">{b.identifier} · {b.identifier_type}</p>

@@ -19,6 +19,7 @@ async def get_user_accounts(user_id: str) -> list:
 
 async def _insert_transaction(doc: dict):
     await db.transactions.insert_one(doc)
+    doc.pop("_id", None)
 
 
 async def _create_notification(user_id: str, title: str, message: str, category: str = "transaction"):

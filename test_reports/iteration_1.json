@@ -1,0 +1,58 @@
+{
+  "summary": "Completed first e2e backend testing for Lumina Bank covering 45 tests across auth, KYC, accounts, transfers, deposits, withdrawals, bills, cards, loans, investments, notifications, chat, support, and admin flows. Found and fixed a critical JSON serialization bug; all 45 tests now pass (100%).",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "ledger.credit_account / debit_account / admin_adjustment / reverse_transaction & /api/cards/*",
+        "issue": "MongoDB insert_one mutates the passed dict by adding ObjectId _id. These functions returned that mutated dict to FastAPI which failed JSON serialization with 500 Internal Server Error: 'ObjectId object is not iterable'. Affected every monetary endpoint (deposits, withdrawals, bills, cards, loans, investments, balance-adjustment, transaction-reversal).",
+        "priority": "CRITICAL"
+      }
+    ],
+    "minor": [
+      {
+        "endpoint": "email_service (Resend)",
+        "issue": "Resend is in sandbox mode; outbound emails to non-verified addresses fail with 403 'You can only send testing emails to your own email address'. OTPs are still stored in DB as expected so flows work, but production needs a verified sender domain."
+      },
+      {
+        "endpoint": "/api/auth/login (unverified non-admin)",
+        "issue": "Returns 403 with a new OTP sent — reasonable UX but the same 403 status is reused for disabled/unverified/frozen which may confuse client handling."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Bug fix already applied by testing agent in /app/backend/ledger.py (_insert_transaction now pops _id) and /app/backend/server.py (cards endpoints pop _id). Main agent should audit any future insert_one+return patterns and consistently strip _id before returning dicts to FastAPI.",
+    "Before going to production, verify a Resend sender domain and update SENDER_EMAIL so OTPs/tx notifications actually deliver to arbitrary user emails.",
+    "Consider distinguishing auth failure reasons with different status codes (401 vs 403 vs 423)."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 1565 lines — should be split into routers by domain (auth, accounts, transfers, admin, etc.) for maintainability.",
+    "Any endpoint that inserts a doc and returns it must pop _id (repeated pattern). Consider a helper insert_and_clean(coll, doc) to enforce this across the codebase.",
+    "/api/withdrawals debits immediately even though status is 'pending' — OK per inline comment, but this means a rejection path reverses via reverse_transaction (which works). Edge case: if admin rejects a completed txn that was already reversed manually, reverse_transaction will raise; add friendlier error surface.",
+    "Transfer limit uses {'$gte': today} where today is a YYYY-MM-DD string but created_at stores full ISO timestamps — lexicographic compare works here but is fragile; use explicit ISO midnight.",
+    "/api/cards/{id}/reveal returns full PAN+CVV with no re-auth — acceptable for virtual cards but should at least log the reveal in audit_logs.",
+    "Loan interest calculation is simple interest with a flat monthly split — documented, but should be called out as non-amortized in the API response."
+  ],
+  "updated_files": [
+    "/app/backend/ledger.py",
+    "/app/backend/server.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/__init__.py",
+    "/app/memory/test_credentials.md"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "not tested (backend-only per request)"},
+  "test_credentials": "admin@lumina.com / admin123. Test users created per-run with UUID suffix; OTPs fetched from MongoDB 'otps' and 'login_challenges' collections.",
+  "seed_data_creation": "Tests create 2 fresh users (alice_<RUN>, bob_<RUN>) + 1 no-KYC user per run; all cleaned up in test_30_cleanup.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 45 e2e tests in /app/backend/tests/backend_test.py pass. The critical ObjectId serialization bug has been fixed in ledger._insert_transaction and the two card creation endpoints. If new endpoints are added that insert_one+return, apply the same pop('_id', None) pattern. Resend emails fail silently to unverified addresses — always read OTPs from MongoDB in tests.",
+  "rca of the issue": "RCA: pymongo's insert_one mutates the input dict in-place by assigning the newly-generated ObjectId to '_id'. The ledger functions (credit_account, debit_account, reverse_transaction, admin_adjustment) and card creation endpoints (request_card, replace_card) inserted a txn/card dict and then returned that same dict to FastAPI. FastAPI's jsonable_encoder cannot serialize ObjectId, which raised a 500. Reproduction: POST /api/admin/balance-adjustment with valid admin token + admin_password -> 500 'ObjectId not iterable'. Mitigation applied: (1) added `doc.pop('_id', None)` immediately after insert_one in _insert_transaction helper, covering all ledger paths; (2) added `.pop('_id', None)` after db.cards.insert_one in both request_card and replace_card. After fix, 45/45 tests pass."
+}

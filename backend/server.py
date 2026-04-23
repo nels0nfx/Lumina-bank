@@ -822,6 +822,7 @@ async def request_card(data: CardRequestModel, request: Request, user: dict = De
         "created_at": now.isoformat(),
     }
     await db.cards.insert_one(card)
+    card.pop("_id", None)
     await log_activity(user["id"], "card_request", request, {"card_id": card["id"], "type": data.card_type})
     safe = {k: v for k, v in card.items() if k not in ("pin_hash",)}
     return {"card": safe}
@@ -880,6 +881,7 @@ async def replace_card(card_id: str, request: Request, user: dict = Depends(get_
         "replaces": card_id,
     }
     await db.cards.insert_one(new_card)
+    new_card.pop("_id", None)
     await log_activity(user["id"], "card_replace", request, {"old": card_id, "new": new_card["id"]})
     safe = {k: v for k, v in new_card.items() if k not in ("pin_hash",)}
     return {"card": safe}
