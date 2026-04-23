@@ -177,3 +177,42 @@ class AdminFreezeAccountRequest(BaseModel):
     account_id: str
     freeze: bool
     reason: Optional[str] = ""
+
+
+# Tokens
+class AdminGrantTokenRequest(BaseModel):
+    user_id: str
+    token_type: Literal["external_transfer", "withdrawal", "deposit", "card_activation"]
+    quantity: int = Field(ge=1, le=50, default=1)
+    note: Optional[str] = ""
+
+
+# External transfer
+class ExternalTransferRequest(BaseModel):
+    from_account_id: str
+    recipient_name: str
+    recipient_bank: str
+    recipient_account_number: str
+    routing_number: Optional[str] = ""
+    swift_code: Optional[str] = ""
+    amount: float = Field(gt=0)
+    description: Optional[str] = ""
+
+
+# Card activation by admin
+class AdminActivateCardRequest(BaseModel):
+    card_id: str
+    payment_confirmed: bool = True
+    note: Optional[str] = ""
+
+
+# Bank Settings
+class BankSettingsUpdate(BaseModel):
+    contact_email: Optional[EmailStr] = None
+    support_email: Optional[EmailStr] = None
+    press_email: Optional[EmailStr] = None
+    support_phone: Optional[str] = None
+    support_hours: Optional[str] = None
+    virtual_card_price: Optional[float] = Field(default=None, ge=0)
+    physical_card_price: Optional[float] = Field(default=None, ge=0)
+    tagline: Optional[str] = None
