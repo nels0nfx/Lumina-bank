@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { api, fmtUSD } from '@/lib/api';
-import { Users, Landmark, ArrowDownToLine, ArrowUpFromLine, ShieldCheck, TrendingUp, Banknote, Clock } from 'lucide-react';
+import { Users, Landmark, ArrowDownToLine, ArrowUpFromLine, ShieldCheck, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const Stat = ({ icon: I, label, value, testId, to, accent }) => (
+const Stat = ({ I, label, value, testId, to, accent }) => (
   <Link to={to || '#'} className="p-6 bg-white border border-border rounded-sm hover:border-gold-500 transition-colors block" data-testid={testId}>
     <div className="flex items-center justify-between">
       <div className={`w-10 h-10 flex items-center justify-center rounded-sm ${accent ? 'bg-gold-500 text-navy-900' : 'bg-navy-900 text-gold-500'}`}>
@@ -29,7 +29,7 @@ export default function AdminDashboard() {
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Stat I={Users} label="Total users" value={stats.users} testId="stat-users" to="/admin/users" />
-        <Stat I={Banknote} label="Total balances" value={fmtUSD(stats.total_balance)} testId="stat-balance" accent />
+        <Stat I={Wallet} label="Total balances" value={fmtUSD(stats.total_balance)} testId="stat-balance" accent />
         <Stat I={ArrowDownToLine} label="Total deposits" value={fmtUSD(stats.total_deposits)} testId="stat-deposits" />
         <Stat I={Landmark} label="Total loans" value={fmtUSD(stats.total_loans)} testId="stat-loans" />
       </div>
