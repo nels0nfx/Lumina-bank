@@ -1,0 +1,136 @@
+{
+  "theme": "LIGHT",
+  "archetype": "Swiss & High-Contrast combined with Jewel & Luxury",
+  "mood": "Premium, Secure, Modern, Authoritative, Frictionless",
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "Manrope",
+    "font_install_instructions": "Add Google Fonts links for Outfit and Manrope in index.html.",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-medium tracking-tight",
+      "h3": "text-xl sm:text-2xl font-medium",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm text-gray-500",
+      "overline": "text-xs font-bold uppercase tracking-[0.2em] text-gold-600"
+    }
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#0B132B",
+      "foreground": "#FFFFFF",
+      "50": "#F0F2F6",
+      "100": "#E1E6EE",
+      "500": "#3A506B",
+      "800": "#1C2541",
+      "900": "#0B132B"
+    },
+    "accent": {
+      "DEFAULT": "#D4AF37",
+      "foreground": "#0B132B",
+      "100": "#FBF5E6",
+      "500": "#D4AF37",
+      "600": "#B8962E"
+    },
+    "background": {
+      "DEFAULT": "#FFFFFF",
+      "alt": "#F8F9FA",
+      "dark": "#0B132B"
+    },
+    "surface": {
+      "DEFAULT": "#FFFFFF",
+      "dark": "#1C2541"
+    },
+    "border": {
+      "DEFAULT": "#E5E7EB",
+      "dark": "rgba(255,255,255,0.1)"
+    },
+    "status": {
+      "success": "#10B981",
+      "error": "#EF4444",
+      "warning": "#F59E0B"
+    }
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-6 md:p-12 lg:p-20",
+    "section_gap": "gap-16 lg:gap-24",
+    "grid_system": {
+      "marketing": "grid grid-cols-1 md:grid-cols-12 gap-8",
+      "dashboard": "grid grid-cols-1 lg:grid-cols-4 gap-6"
+    },
+    "card_padding": "p-6 sm:p-8"
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-accent text-accent-foreground hover:bg-accent-600 rounded-sm transition-colors duration-200 font-medium px-6 py-3",
+      "secondary": "bg-primary text-white hover:bg-primary-800 rounded-sm transition-colors duration-200 font-medium px-6 py-3",
+      "outline": "border border-border bg-transparent hover:bg-gray-50 rounded-sm transition-colors duration-200 font-medium px-6 py-3",
+      "dark_outline": "border border-white/20 text-white hover:bg-white/10 rounded-sm transition-colors duration-200 font-medium px-6 py-3"
+    },
+    "cards": {
+      "marketing": "bg-white border border-border rounded-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+      "dashboard": "bg-white border border-border rounded-sm",
+      "dark": "bg-primary-800 border border-border-dark rounded-sm text-white"
+    },
+    "inputs": {
+      "default": "border-border bg-transparent rounded-sm focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-200",
+      "dark": "border-white/20 bg-white/5 text-white placeholder:text-white/50 focus:ring-2 focus:ring-accent focus:border-accent"
+    },
+    "navigation": {
+      "marketing_header": "sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-border",
+      "dashboard_sidebar": "bg-primary text-white border-r border-border-dark w-64 flex-shrink-0"
+    }
+  },
+  "motion_and_interactions": {
+    "hover": "transform transition-transform duration-300 hover:-translate-y-1",
+    "click": "active:scale-[0.98]",
+    "page_transition": "animate-in fade-in slide-in-from-bottom-4 duration-500",
+    "list_stagger": "animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+  },
+  "icons_and_assets": {
+    "library": "lucide-react",
+    "stroke_width": 1.5,
+    "size": {
+      "small": 16,
+      "default": 24,
+      "large": 32
+    }
+  },
+  "media": {
+    "images": {
+      "hero_background": {
+        "url": "https://images.unsplash.com/photo-1760561149141-0e88e5e27026?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBnbGFzcyUyMG9mZmljZSUyMGJ1aWxkaW5nJTIwc2t5bGluZXxlbnwwfHx8fDE3NzY5NzUwMzB8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern glass office building skyline, used with a dark midnight blue gradient overlay for the main landing page hero section."
+      },
+      "premium_lifestyle": {
+        "url": "https://images.unsplash.com/photo-1761377197584-2eed555e2b0c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxwcmVtaXVtJTIwbGlmZXN0eWxlJTIwd2VhbHRoeSUyMHJlbGF4aW5nfGVufDB8fHx8MTc3Njk3NTAzMHww&ixlib=rb-4.1.0&q=85",
+        "description": "Man sitting with suitcase in stylish hotel lobby, used for wealth management or premium cards section."
+      },
+      "abstract_gold_texture": {
+        "url": "https://images.unsplash.com/photo-1690192715829-db4e65d65dd7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGJsdWUlMjBhbmQlMjBnb2xkJTIwcHJlbWl1bSUyMHRleHR1cmV8ZW58MHx8fHwxNzc2OTc1MDMwfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract blue and gold premium texture, ideal for virtual card backgrounds or premium account banners."
+      },
+      "modern_architecture": {
+        "url": "https://images.pexels.com/photos/2908977/pexels-photo-2908977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Contemporary skyscrapers reflecting the sky, suitable for 'About Us' or corporate sections."
+      }
+    }
+  },
+  "specific_design_rules": {
+    "borders": "Use rounded-sm (2px) to maintain a sharp, premium, institutional look. Avoid heavily rounded corners (like rounded-2xl or full).",
+    "overlays": "Hero images must have an overlay of bg-primary/80 to bg-primary/90 to ensure white and gold text contrast perfectly.",
+    "dashboard_cards": "Dashboard cards should be flat with a 1px border. Do not use heavy shadows in the dashboard to maintain a clean data-focused view.",
+    "accents": "Use gold (#D4AF37) sparingly for primary calls to action, active states, or premium tier indicators. Do not overuse gold as it can look cheap if overdone.",
+    "testing": "All interactive elements must have data-testid attributes."
+  },
+  "instructions_to_main_agent": [
+    "Configure tailwind.config.js with the provided colors (primary, accent, background).",
+    "Install and set up Outfit and Manrope fonts.",
+    "Build Shadcn components (buttons, inputs, cards) using the 'rounded-sm' style instead of the default Vercel look.",
+    "For the marketing site, use generous paddings (py-24) and large, expressive typography.",
+    "For the dashboard, use a strict grid layout, smaller text sizes for data density, and clear visual hierarchy without excessive decoration.",
+    "Ensure the gold button text is dark (#0B132B) to meet contrast requirements.",
+    "Never use generic placeholder images; use the provided URLs from the media section."
+  ]
+}
